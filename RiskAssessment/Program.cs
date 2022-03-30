@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
+using RiskAssessment.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,15 +12,14 @@ JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = "Cookies";
-    options.DefaultChallengeScheme = "oidc";
+    options.DefaultChallengeScheme = InvoiceOption.Scheme;
 })
     .AddCookie("Cookies")
-    .AddOpenIdConnect("oidc", options =>
+    .AddOpenIdConnect(InvoiceOption.Scheme, options =>
     {
-        options.Authority = "https://localhost:5001";
+        options.Authority = InvoiceOption.AuthorizationUrl;
 
-        options.ClientId = "web";
-        options.ClientSecret = "secret";
+        options.ClientId = InvoiceOption.ClientId;
         options.ResponseType = "code";
 
         options.Scope.Clear();

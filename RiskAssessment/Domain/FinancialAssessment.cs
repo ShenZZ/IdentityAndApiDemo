@@ -19,16 +19,18 @@ public class FinancialAssessment
     public IList<FinancialDataItem> FinancialDatas { get; set; }
 
     public FinancialAssessment() { }
-    public FinancialAssessment(string customerId) {
+    public FinancialAssessment(string customerId)
+    {
         if (string.IsNullOrWhiteSpace(customerId))
             throw new ArgumentNullException(nameof(customerId));
-        
+
         this.Id = Guid.NewGuid();
         this.CustomerId = customerId;
         this.IsSuccess = false;
     }
 
-    public bool Check()
+    /// <summary>评估</summary>
+    public bool Assess()
     {
         if (this.FinancialDatas == null && this.FinancialDatas.Count == 0)
         {
@@ -66,6 +68,12 @@ public class FinancialAssessment
 
         return this.IsSuccess;
     }
+
+    /// <summary>是否过期</summary>
+    public bool IsExpired()
+    {
+        return this.AssessmentDate < DateTime.Now.AddMonths(-6);
+    }
 }
 
 /// <summary>
@@ -74,7 +82,7 @@ public class FinancialAssessment
 public class FinancialDataItem
 {
     [Required]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     [Required]
     public FinancialAssessment Assessment { get; set; }
     /// <summary>发票对象名字</summary>
