@@ -1,0 +1,38 @@
+﻿@model FinancialAssessmentModel
+@{
+    ViewData["Title"] = "CustomerAssessment";
+}
+
+<h2>评估结果</h2>
+<p>评估日期：@Model.Creation.ToShortDateString()</p>
+
+@if (Model.IsSuccess)
+{
+    <div class="alert alert-success" role="alert">评估通过</div>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">@Model.Description</div>
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Date</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (var item in Model.Items)
+      {
+        <tr>
+          <td>@item.Title</td>
+          <td>@item.Creation.ToShortDateString()</td>
+          <td>@item.Amount</td>
+          <td>@item.Balance</td>
+        </tr>
+      }
+  </tbody>
+</table> 

@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="keys\**" />
+    <Content Remove="keys\**" />
+    <EmbeddedResource Remove="keys\**" />
+    <None Remove="keys\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Duende.IdentityServer" Version="6.0.4" />
   </ItemGroup>
 

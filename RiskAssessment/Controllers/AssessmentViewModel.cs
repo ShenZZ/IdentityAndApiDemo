@@ -3,13 +3,14 @@
 public class AssessmentViewModel
 {
     public FinancialAssessmentModel FinancialAssessmentInfo { get; set; }
-    // Type [api/email]
+    public string AssessType { get; set; } = "api";  //api|email
 
     // Other Assessment Info
 }
 
 public class FinancialAssessmentModel
 {
+    public string Id { get; set; }
     public bool IsSuccess { get; set; }
     public string Description { get; set; }
     public DateTime Creation { get; set; }

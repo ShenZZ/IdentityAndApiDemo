@@ -17,7 +17,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Invoice> Get(DateTime start)
+        public IEnumerable<Invoice> Get(DateTime start, DateTime end)
         {
             return Enumerable.Range(1, 100).Select(index =>
             {

@@ -27,14 +27,12 @@ public static class Config
         {
             new Client
             {
-                ClientId = "web",
-                ClientSecrets = { new Secret("secret".Sha256()) },
+                ClientId = "assess_client",
                 AllowedGrantTypes = GrantTypes.Code,
-                
-                RedirectUris = { "https://localhost:6001/signin-oidc" },
-                PostLogoutRedirectUris = { "https://localhost:6001/signout-callback-oidc" },
+                RequireClientSecret = false,
 
-                AllowOfflineAccess = true,
+                RedirectUris = { "https://localhost:6001/signin-oidc" },
+                AllowedCorsOrigins = { "https://localhost:6001" },
 
                 AllowedScopes = new List<string>
                 {

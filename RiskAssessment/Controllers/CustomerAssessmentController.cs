@@ -32,9 +32,11 @@ public class CustomerAssessmentController : Controller
         {
             model.FinancialAssessmentInfo = new FinancialAssessmentModel
             {
+                Id = recent.Id.ToString(),
                 IsSuccess = recent.IsSuccess,
                 Description = recent.Description,
-                Creation = recent.AssessmentDate
+                Creation = recent.AssessmentDate,
+                IsExpired = recent.IsExpired(),
             };
         }
 
@@ -63,8 +65,10 @@ public class CustomerAssessmentController : Controller
         //todo: token过期问题未处理
         //todo: token获取/过期处理 也可以一起封装到service中
 
-        //3.api获取数据 todo:默认最近半年的数据? 或者应该指定日期获取半年数据
-        var invoices = await _financialAssessmentService.GetFinancialDatas(customerId, token);
+        //3.获取api数据
+        var end = DateTime.Now;
+        var start = end.AddMonths(-6);
+        var invoices = await _financialAssessmentService.GetFinancialDatas(start, end, token);
 
         //4.评估数据
         var model = new FinancialAssessment(customerId)
@@ -98,7 +102,7 @@ public class CustomerAssessmentController : Controller
             IsSuccess = recent.IsSuccess,
             Description = recent.Description,
             Creation = recent.AssessmentDate,
-            Items = recent.FinancialDatas.OrderByDescending(s => s.Creation).Take(10) //todo: 这里应该放到Repository中处理
+            Items = recent.FinancialDatas?.OrderByDescending(s => s.Creation).Take(10) //todo: 这里应该放到Repository中处理
                 .Select(s => new FinancialAssessmentItemModel
                 {
                     Title = s.Title,

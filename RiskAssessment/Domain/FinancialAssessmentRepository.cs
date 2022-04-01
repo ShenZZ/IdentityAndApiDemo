@@ -8,8 +8,12 @@ public interface IFinancialAssessmentRepository
 }
 public class FinancialAssessmentRepository : IFinancialAssessmentRepository
 {
+    private static FinancialAssessment _testdata;
+
     public Task<FinancialAssessment> Get(string id)
     {
+        if (_testdata != null) return Task.FromResult(_testdata);
+
         //测试数据
         var model = new FinancialAssessment("test_user")
         {
@@ -21,6 +25,8 @@ public class FinancialAssessmentRepository : IFinancialAssessmentRepository
     }
     public Task<FinancialAssessment> GetRecent(string customerId)
     {
+        if (_testdata != null) return Task.FromResult(_testdata);
+
         //测试数据
         var model = new FinancialAssessment(customerId)
         {
@@ -32,6 +38,8 @@ public class FinancialAssessmentRepository : IFinancialAssessmentRepository
     }
     public Task Add(FinancialAssessment entity)
     {
+        _testdata = entity;
+
         return Task.CompletedTask;
     }
 }

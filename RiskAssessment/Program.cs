@@ -1,6 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication;
+using Refit;
+using RiskAssessment.Domain;
 using RiskAssessment.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +27,16 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Add("openid");
         options.Scope.Add("profile");
         options.Scope.Add("invoice");
-        options.GetClaimsFromUserInfoEndpoint = true;
+        //options.GetClaimsFromUserInfoEndpoint = true;
 
         options.SaveTokens = true;
     });
+
+builder.Services.AddScoped<IFinancialAssessmentRepository, FinancialAssessmentRepository>();
+
+builder.Services
+    .AddRefitClient<IFinancialAssessmentService>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(InvoiceOption.ApiUrl));
 
 var app = builder.Build();
 

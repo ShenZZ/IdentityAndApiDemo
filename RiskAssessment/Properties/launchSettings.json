@@ -1,9 +1,10 @@
 ﻿{
   "profiles": {
-    "WebClient": {
+    "RiskAssessment": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
+      "launchUrl": "CustomerAssessment",
       "applicationUrl": "https://localhost:6001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
